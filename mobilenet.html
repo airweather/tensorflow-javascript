@@ -16,7 +16,7 @@
     <!-- <img id="img" src="gym.png"></img> -->
 
     <!-- Place your code in the script tag below. You can also use an external .js file -->
-    <script>
+    <!-- <script>
       // Notice there is no 'import' statement. 'mobilenet' and 'tf' is
       // available on the index-page because of the script tag above.
 
@@ -30,6 +30,48 @@
           console.log(predictions);
         });
       });
+
+
+</script> -->
+<script>
+  const temperature = [20, 21, 23, 22, 24, 25, 26, 27, 28, 29, 30];
+  const selling = [40, 41, 46, 44, 48, 50, 52, 54, 56, 58, 60];
+
+  const cause = tf.tensor(temperature);
+  const result = tf.tensor(selling);
+
+  //input : 입력값
+  //shape : 입력값의 형태
+  //layer : 레이어
+  //units : 출력값의 형태
+  const x = tf.input({ shape: [1] });
+  const y = tf.layers.dense({ units: 1 }).apply(x);
+
+  //optimizer : 학습 방법
+  //loss : 오차율
+  const model = tf.model({ inputs: x, outputs: y });
+  const compileParam = {
+    optimizer: tf.train.adam(),
+    loss: tf.losses.meanSquaredError,
+  };
+
+  model.compile(compileParam)
+
+  //epoch : 학습 횟수
+  const fitParam = {
+    epochs: 100,
+    
+  };
+
+  // const answer = model.fit(cause, result, fitParam).then(() => {
+  //   const newTemp = [31, 32, 33, 34, 35];
+  //   const newCause = tf.tensor(newTemp, [5, 1]);
+  //   const prediction = model.predict(newCause);
+  //   prediction.print();
+  // });
+
+  // console.log('answer : ',answer);
+
 </script>
 </body>
 </html>
